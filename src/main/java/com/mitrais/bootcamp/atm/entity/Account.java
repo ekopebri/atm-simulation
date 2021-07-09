@@ -3,10 +3,10 @@ package com.mitrais.bootcamp.atm.entity;
 public class Account {
     private String name;
     private String pin;
-    private String balance;
+    private Long balance;
     private String accountNumber;
 
-    public Account(String name, String pin, String balance, String accountNumber) {
+    public Account(String name, String pin, Long balance, String accountNumber) {
         this.name = name;
         this.pin = pin;
         this.balance = balance;
@@ -32,11 +32,11 @@ public class Account {
         this.pin = pin;
     }
 
-    public String getBalance() {
+    public Long getBalance() {
         return balance;
     }
 
-    public void setBalance(String balance) {
+    public void setBalance(Long balance) {
         this.balance = balance;
     }
 
