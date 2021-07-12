@@ -57,37 +57,45 @@ public class AccountServiceImpl implements AccountService {
         switch (type) {
             case "1":
                 if (account.getBalance() >= 10) {
-                    accountRepository.reduceBalanceByAccountNumber(10L, accountNumber);
+                    account = accountRepository.reduceBalanceByAccountNumber(10L, account);
                     response.setSuccess(true);
                     response.setWithdraw("$10");
                     response.setBalance("$" + account.getBalance() );
+
+                    return response;
                 }
                 System.out.println("Insufficient balance $10");
                 break;
             case "2":
                 if (account.getBalance() >= 50) {
-                    accountRepository.reduceBalanceByAccountNumber(50L, accountNumber);
+                    account = accountRepository.reduceBalanceByAccountNumber(50L, account);
                     response.setSuccess(true);
                     response.setWithdraw("$50");
                     response.setBalance("$" + account.getBalance());
+
+                    return response;
                 }
                 System.out.println("Insufficient balance $50");
                 break;
             case "3":
                 if (account.getBalance() >= 100) {
-                    accountRepository.reduceBalanceByAccountNumber(100L, accountNumber);
+                    account = accountRepository.reduceBalanceByAccountNumber(100L, account);
                     response.setSuccess(true);
                     response.setWithdraw("$100");
                     response.setBalance("$" + account.getBalance());
+
+                    return response;
                 }
                 System.out.println("Insufficient balance $100");
                 break;
             case "4":
                 if (account.getBalance() >= amount) {
-                    accountRepository.reduceBalanceByAccountNumber(amount, accountNumber);
+                    account = accountRepository.reduceBalanceByAccountNumber(amount, account);
                     response.setSuccess(true);
                     response.setWithdraw("$" + amount);
                     response.setBalance("$" + account.getBalance());
+
+                    return response;
                 }
                 System.out.println("Insufficient balance $" + amount);
                 break;
@@ -108,11 +116,13 @@ public class AccountServiceImpl implements AccountService {
                 0L,
                 false);
 
-        Account account = accountRepository.findByAccountNumber(request.getFrom());
-        if (account.getBalance() >= request.getAmount()) {
-            accountRepository.reduceBalanceByAccountNumber(request.getAmount(), request.getFrom());
-            accountRepository.increaseBalanceByAccountNumber(request.getAmount(), request.getTo());
-            response.setBalance(account.getBalance());
+        Account fromAccount = accountRepository.findByAccountNumber(request.getFrom());
+        Account toAccount = accountRepository.findByAccountNumber(request.getTo());
+        if (fromAccount.getBalance() >= request.getAmount()) {
+            fromAccount = accountRepository.reduceBalanceByAccountNumber(request.getAmount(), fromAccount);
+            toAccount = accountRepository.increaseBalanceByAccountNumber(request.getAmount(), toAccount);
+            response.setBalance(fromAccount.getBalance());
+            response.setBalanceDestination(toAccount.getBalance());
             response.setSuccess(true);
         }
 

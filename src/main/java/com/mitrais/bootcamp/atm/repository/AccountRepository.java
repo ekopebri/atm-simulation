@@ -13,7 +13,7 @@ public interface AccountRepository {
 
     Account findByAccountNumber(String accountNumber);
 
-    void reduceBalanceByAccountNumber(Long amount, String accountNumber);
+    Account reduceBalanceByAccountNumber(Long amount, Account account);
 
-    void increaseBalanceByAccountNumber(Long amount, String to);
+    Account increaseBalanceByAccountNumber(Long amount, Account account);
 }

@@ -40,28 +40,36 @@ public class AccountRepositoryImpl implements AccountRepository {
     }
 
     @Override
-    public void reduceBalanceByAccountNumber(Long amount, String accountNumber) {
+    public Account reduceBalanceByAccountNumber(Long amount, Account account) {
+        account.setBalance(account.getBalance() - amount);
+
         data = data.stream()
                 .map(e -> {
-                    if (e.getAccountNumber().equals(accountNumber)) {
-                        e.setBalance(e.getBalance() - amount);
+                    if (e.getAccountNumber().equals(account.getAccountNumber())) {
+                        return account;
                     }
 
                     return e;
                 })
                 .collect(Collectors.toList());
+
+        return account;
     }
 
     @Override
-    public void increaseBalanceByAccountNumber(Long amount, String accountNumber) {
+    public Account increaseBalanceByAccountNumber(Long amount, Account account) {
+        account.setBalance(account.getBalance() + amount);
+
         data = data.stream()
                 .map(e -> {
-                    if (e.getAccountNumber().equals(accountNumber)) {
-                        e.setBalance(e.getBalance() + amount);
+                    if (e.getAccountNumber().equals(account.getAccountNumber())) {
+                        return account;
                     }
 
                     return e;
                 })
                 .collect(Collectors.toList());
+
+        return account;
     }
 }

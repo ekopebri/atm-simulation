@@ -171,9 +171,9 @@ public class AtmView {
     private void showFundTransferSummaryScreen(TransferResponse response) {
         System.out.println("Fund Transfer Summary");
         System.out.println("Destination Account : " + response.getTo());
-        System.out.println("Transfer Amount : " + response.getAmount());
+        System.out.println("Transfer Amount : $" + response.getAmount());
         System.out.println("Reference Number : " + response.getReferenceNumber());
-        System.out.println("Balance : " + response.getBalance());
+        System.out.println("Balance : $" + response.getBalance());
         System.out.println();
         System.out.println("1. Transaction");
         System.out.println("2. Exit");

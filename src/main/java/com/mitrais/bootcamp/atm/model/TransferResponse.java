@@ -6,6 +6,7 @@ public class TransferResponse {
     private Long amount;
     private String referenceNumber;
     private Long balance;
+    private Long balanceDestination;
     private Boolean success;
 
     public TransferResponse(String from, String to, Long amount, String referenceNumber, Long balance, Boolean success) {
@@ -66,5 +67,13 @@ public class TransferResponse {
 
     public void setSuccess(Boolean success) {
         this.success = success;
+    }
+
+    public Long getBalanceDestination() {
+        return balanceDestination;
+    }
+
+    public void setBalanceDestination(Long balanceDestination) {
+        this.balanceDestination = balanceDestination;
     }
 }
