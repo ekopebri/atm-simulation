@@ -76,6 +76,14 @@
           <artifactId>maven-project-info-reports-plugin</artifactId>
           <version>3.0.0</version>
         </plugin>
+        <plugin>
+          <groupId>org.codehaus.mojo</groupId>
+          <artifactId>exec-maven-plugin</artifactId>
+          <version>3.0.0</version>
+          <configuration>
+            <mainClass>com.mitrais.bootcamp.atm.AtmApp</mainClass>
+          </configuration>
+        </plugin>
       </plugins>
     </pluginManagement>
   </build>
