@@ -17,7 +17,6 @@ public class AtmView {
     }
 
     public void showAtm() {
-        accountService.initialData();
 
         while (true) {
             String accountNumber = InputUtil.inputString("Enter Account Number");
@@ -26,7 +25,7 @@ public class AtmView {
             if (ValidationUtil.checkAccount(accountNumber, pin)) {
                 Account account = accountService.getAccount(accountNumber, pin);
                 if (account != null) {
-                    showTransactionScreen(account.getAccountNumber());
+                    showTransactionScreen(account);
                 } else {
                     System.out.println("Invalid Account Number/PIN");
                 }
@@ -34,7 +33,7 @@ public class AtmView {
         }
     }
 
-    public void showTransactionScreen(String accountNumber) {
+    public void showTransactionScreen(Account account) {
         System.out.println("1. Withdraw");
         System.out.println("2. Fund Transfer");
         System.out.println("3. Exit");
@@ -45,18 +44,18 @@ public class AtmView {
                 //
                 break;
             case "1":
-                showWithDrawScreen(accountNumber);
+                showWithDrawScreen(account);
                 break;
             case "2":
-                showFundTransferScreen(new TransferRequest(accountNumber, "", 0L, ""), 0L);
+                showFundTransferScreen(new TransferRequest(account, new Account(), 0L, ""), 0L);
                 break;
             default:
-                showTransactionScreen(accountNumber);
+                showTransactionScreen(account);
                 break;
         }
     }
 
-    public void showWithDrawScreen(String accountNumber) {
+    public void showWithDrawScreen(Account account) {
         System.out.println("1. $10");
         System.out.println("2. $50");
         System.out.println("3. $100");
@@ -68,16 +67,16 @@ public class AtmView {
         if (transactionInput.trim().equals("") || transactionInput.trim().equals("5")) {
 
         } else if (transactionInput.trim().equals("1") || transactionInput.trim().equals("2") || transactionInput.trim().equals("3")) {
-            WithdrawResponse response = accountService.withdrawBalance(transactionInput.trim(), accountNumber, 0L);
+            WithdrawResponse response = accountService.withdrawBalance(transactionInput.trim(), account, 0L);
             if (response.isSuccess()) {
                 showSummaryScreen(response);
             } else {
                 showWithDrawScreen(response.getAccountNumber());
             }
         } else if (transactionInput.trim().equals("4")) {
-            showOtherWithdrawScreen(accountNumber);
+            showOtherWithdrawScreen(account);
         } else {
-            showWithDrawScreen(accountNumber);
+            showWithDrawScreen(account);
         }
     }
 
@@ -99,12 +98,12 @@ public class AtmView {
         }
     }
 
-    private void showOtherWithdrawScreen(String accountNumber) {
+    private void showOtherWithdrawScreen(Account account) {
         System.out.println("Other Withdraw");
         String transactionInput = InputUtil.inputString("Enter amount to withdraw");
 
         if (ValidationUtil.checkInput(transactionInput.trim())) {
-            WithdrawResponse response = accountService.withdrawBalance(transactionInput.trim(), accountNumber, Long.parseLong(transactionInput));
+            WithdrawResponse response = accountService.withdrawBalance(transactionInput.trim(), account, Long.parseLong(transactionInput));
             if (response.isSuccess()) {
                 showSummaryScreen(response);
             } else {
@@ -120,8 +119,9 @@ public class AtmView {
             if (input.trim().equals("")) {
                 showTransactionScreen(request.getFrom());
             } else if (ValidationUtil.isAccountCorrect(input.trim()) && !input.trim().equals(request.getFrom())) {
+                Account accountDestination = accountService.getAccount(input);
                 if (accountService.isAccountExist(input)) {
-                    request.setTo(input);
+                    request.setTo(accountDestination);
                     showFundTransferScreen(request, 1L);
                 } else {
                     System.out.println("Invalid account");
@@ -155,7 +155,7 @@ public class AtmView {
 
             if (transactionInput.equals("1")) {
                 TransferResponse response = accountService.transferFunds(request);
-                if (response.isSuccess()) {
+                if (response.getSuccess()) {
                     showFundTransferSummaryScreen(response);
                 } else {
                     showTransactionScreen(response.getFrom());

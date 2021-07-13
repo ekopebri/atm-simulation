@@ -16,6 +16,7 @@ public class AtmApp
     {
         AccountRepository accountRepository = new AccountRepositoryImpl();
         AccountService accountService = new AccountServiceImpl(accountRepository);
+        accountService.initialData();
         AtmView atmView = new AtmView(accountService);
         atmView.showAtm();
     }

@@ -1,16 +1,18 @@
 package com.mitrais.bootcamp.atm.model;
 
+import com.mitrais.bootcamp.atm.entity.Account;
+
 import java.time.LocalDateTime;
 
 public class WithdrawResponse {
-    private String accountNumber;
+    private Account account;
     private String date;
     private String withdraw;
     private String balance;
     private Boolean success;
 
-    public WithdrawResponse(String accountNumber, String date, String withdraw, String balance, Boolean isSuccess) {
-        this.accountNumber = accountNumber;
+    public WithdrawResponse(Account account, String date, String withdraw, String balance, Boolean isSuccess) {
+        this.account = account;
         this.date = date;
         this.withdraw = withdraw;
         this.balance = balance;
@@ -20,12 +22,12 @@ public class WithdrawResponse {
     public WithdrawResponse() {
     }
 
-    public String getAccountNumber() {
-        return accountNumber;
+    public Account getAccountNumber() {
+        return account;
     }
 
-    public void setAccountNumber(String accountNumber) {
-        this.accountNumber = accountNumber;
+    public void setAccountNumber(Account account) {
+        this.account = account;
     }
 
     public String getDate() {

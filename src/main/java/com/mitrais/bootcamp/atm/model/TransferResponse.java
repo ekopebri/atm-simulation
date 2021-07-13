@@ -1,15 +1,17 @@
 package com.mitrais.bootcamp.atm.model;
 
+import com.mitrais.bootcamp.atm.entity.Account;
+
 public class TransferResponse {
-    private String from;
-    private String to;
+    private Account from;
+    private Account to;
     private Long amount;
     private String referenceNumber;
     private Long balance;
     private Long balanceDestination;
     private Boolean success;
 
-    public TransferResponse(String from, String to, Long amount, String referenceNumber, Long balance, Boolean success) {
+    public TransferResponse(Account from, Account to, Long amount, String referenceNumber, Long balance,  Boolean success) {
         this.from = from;
         this.to = to;
         this.amount = amount;
@@ -21,19 +23,19 @@ public class TransferResponse {
     public TransferResponse() {
     }
 
-    public String getFrom() {
+    public Account getFrom() {
         return from;
     }
 
-    public void setFrom(String from) {
+    public void setFrom(Account from) {
         this.from = from;
     }
 
-    public String getTo() {
+    public Account getTo() {
         return to;
     }
 
-    public void setTo(String to) {
+    public void setTo(Account to) {
         this.to = to;
     }
 
@@ -61,19 +63,19 @@ public class TransferResponse {
         this.balance = balance;
     }
 
-    public Boolean isSuccess() {
-        return success;
-    }
-
-    public void setSuccess(Boolean success) {
-        this.success = success;
-    }
-
     public Long getBalanceDestination() {
         return balanceDestination;
     }
 
     public void setBalanceDestination(Long balanceDestination) {
         this.balanceDestination = balanceDestination;
+    }
+
+    public Boolean getSuccess() {
+        return success;
+    }
+
+    public void setSuccess(Boolean success) {
+        this.success = success;
     }
 }

@@ -1,20 +1,14 @@
 package com.mitrais.bootcamp.atm.model;
 
+import com.mitrais.bootcamp.atm.entity.Account;
+
 public class TransferRequest {
-    private String from;
-    private String to;
+    private Account from;
+    private Account to;
     private Long amount;
     private String referenceNumber;
 
-    public String getReferenceNumber() {
-        return referenceNumber;
-    }
-
-    public void setReferenceNumber(String referenceNumber) {
-        this.referenceNumber = referenceNumber;
-    }
-
-    public TransferRequest(String from, String to, Long amount, String referenceNumber) {
+    public TransferRequest(Account from, Account to, Long amount, String referenceNumber) {
         this.from = from;
         this.to = to;
         this.amount = amount;
@@ -24,19 +18,19 @@ public class TransferRequest {
     public TransferRequest() {
     }
 
-    public String getFrom() {
+    public Account getFrom() {
         return from;
     }
 
-    public void setFrom(String from) {
+    public void setFrom(Account from) {
         this.from = from;
     }
 
-    public String getTo() {
+    public Account getTo() {
         return to;
     }
 
-    public void setTo(String to) {
+    public void setTo(Account to) {
         this.to = to;
     }
 
@@ -46,5 +40,13 @@ public class TransferRequest {
 
     public void setAmount(Long amount) {
         this.amount = amount;
+    }
+
+    public String getReferenceNumber() {
+        return referenceNumber;
+    }
+
+    public void setReferenceNumber(String referenceNumber) {
+        this.referenceNumber = referenceNumber;
     }
 }

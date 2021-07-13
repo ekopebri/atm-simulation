@@ -8,13 +8,13 @@ import com.mitrais.bootcamp.atm.model.WithdrawResponse;
 public interface AccountService {
     void initialData();
 
-    void showAccountList();
-
     boolean isAccountExist(String accountNumber);
 
     Account getAccount(String accountNumber, String pin);
 
-    WithdrawResponse withdrawBalance(String type, String accountNumber, Long amount);
+    Account getAccount(String accountNumber);
+
+    WithdrawResponse withdrawBalance(String type, Account account, Long amount);
 
     TransferResponse transferFunds(TransferRequest request);
 }

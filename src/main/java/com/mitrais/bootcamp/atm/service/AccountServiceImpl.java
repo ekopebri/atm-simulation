@@ -28,32 +28,42 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
-    public void showAccountList() {
-        List<Account> accounts = accountRepository.getAll();
-
-    }
-
-    @Override
     public boolean isAccountExist(String accountNumber) {
-        Account account = accountRepository.findByAccountNumber(accountNumber);
-        if (account == null) {
+        try {
+            accountRepository.findByAccountNumber(accountNumber);
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
             return false;
         }
-        return true;
     }
 
     @Override
     public Account getAccount(String accountNumber, String pin) {
-        return accountRepository.findByAccountNumberAndPin(accountNumber, pin);
+        try {
+            return accountRepository.findByAccountNumberAndPin(accountNumber, pin);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
     @Override
-    public WithdrawResponse withdrawBalance(String type, String accountNumber, Long amount) {
-        Account account = accountRepository.findByAccountNumber(accountNumber);
+    public Account getAccount(String accountNumber) {
+        try {
+            return accountRepository.findByAccountNumber(accountNumber);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    @Override
+    public WithdrawResponse withdrawBalance(String type, Account account, Long amount) {
         WithdrawResponse response = new WithdrawResponse();
         LocalDateTime dateTime = LocalDateTime.now();
         response.setDate(DateUtil.parseLocalDateTimeToString(dateTime, "yyyy-MM-dd KK:mm a"));
-        response.setAccountNumber(accountNumber);
+        response.setAccountNumber(account);
         switch (type) {
             case "1":
                 if (account.getBalance() >= 10) {
@@ -116,8 +126,8 @@ public class AccountServiceImpl implements AccountService {
                 0L,
                 false);
 
-        Account fromAccount = accountRepository.findByAccountNumber(request.getFrom());
-        Account toAccount = accountRepository.findByAccountNumber(request.getTo());
+        Account fromAccount = request.getFrom();
+        Account toAccount = request.getTo();
         if (fromAccount.getBalance() >= request.getAmount()) {
             fromAccount = accountRepository.reduceBalanceByAccountNumber(request.getAmount(), fromAccount);
             toAccount = accountRepository.increaseBalanceByAccountNumber(request.getAmount(), toAccount);

@@ -15,28 +15,19 @@ public class AccountRepositoryImpl implements AccountRepository {
     }
 
     @Override
-    public List<Account> getAll() {
-        return data;
-    }
-
-    @Override
-    public Account findByAccountNumberAndPin(String accountNumber, String pin) {
+    public Account findByAccountNumberAndPin(String accountNumber, String pin) throws Exception {
         return data.stream()
                 .filter(e -> e.getAccountNumber().equals(accountNumber) && e.getPin().equals(pin))
-                .collect(Collectors.toList())
-                .stream()
                 .findFirst()
-                .orElse(null);
+                .orElseThrow(() -> new Exception("Invalid Account Number/PIN"));
     }
 
     @Override
-    public Account findByAccountNumber(String accountNumber) {
+    public Account findByAccountNumber(String accountNumber) throws Exception {
         return data.stream()
                 .filter(e -> e.getAccountNumber().equals(accountNumber))
-                .collect(Collectors.toList())
-                .stream()
                 .findFirst()
-                .orElse(null);
+                .orElseThrow(() ->new Exception("Invalid Account Number"));
     }
 
     @Override

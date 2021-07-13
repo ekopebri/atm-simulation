@@ -7,11 +7,9 @@ import java.util.List;
 public interface AccountRepository {
     void batchData(List<Account> accounts);
 
-    List<Account> getAll();
+    Account findByAccountNumberAndPin(String accountNumber, String pin) throws Exception;
 
-    Account findByAccountNumberAndPin(String accountNumber, String pin);
-
-    Account findByAccountNumber(String accountNumber);
+    Account findByAccountNumber(String accountNumber) throws Exception;
 
     Account reduceBalanceByAccountNumber(Long amount, Account account);
 
